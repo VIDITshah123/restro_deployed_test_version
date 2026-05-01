@@ -1,0 +1,5 @@
+- [x] in admin dashboadr, if someone request for a bill, the  billing section of side bar menu should get a red dot type of thing.....like when we recive a notification in phone, the app which gets the notification it gets a red dot on it....like that 
+- [x] in kitchen display, if the item is required as regular do nothing, if item is required as jain, highlight the name of that dish in red colour, if it is required as half jain, highlight it in yellow colour
+- [x] Table 1, 2 & 5 doesnot have qr code, pls see to it
+- [x] admin should also have a page to place order for any table
+- [x] add a full menue to my system with images
