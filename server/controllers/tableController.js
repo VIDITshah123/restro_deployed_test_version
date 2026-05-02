@@ -23,7 +23,7 @@ const createTable = async (req, res) => {
     const tableId = info.lastInsertRowid;
 
     // Generate QR code
-    const menuUrl = `http://localhost:5173/menu/${tableId}`;
+    const menuUrl = `http://13.48.192.200/menu/${tableId}`;
     const qr_code_url = await qrcode.toDataURL(menuUrl);
     
     db.prepare('UPDATE tables SET qr_code_url = ? WHERE id = ?').run(qr_code_url, tableId);
