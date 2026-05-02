@@ -35,7 +35,7 @@ const AdminLayout = () => {
     // Custom event to sync within the same window
     window.addEventListener('billRequestsUpdated', checkRequests);
 
-    const socket = io('http://localhost:3000/admin');
+    const socket = io('/admin');
     socket.on('notification:bill_request', (data) => {
       try {
         const stored = localStorage.getItem('billRequestedTables');

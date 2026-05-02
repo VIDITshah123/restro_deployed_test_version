@@ -43,7 +43,7 @@ const BillingPage = () => {
   useEffect(() => {
     fetchTables();
 
-    const socket = io('http://localhost:3000/admin');
+    const socket = io('/admin');
     socket.on('notification:bill_request', (data) => {
       setBillRequestedTables(prev => {
         const next = new Set(prev);

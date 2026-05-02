@@ -23,7 +23,7 @@ const WaiterDashboard = () => {
     fetchTables();
 
     // Connect to waiter socket namespace for notifications
-    const socket = io('http://localhost:3000/waiter');
+    const socket = io('/waiter');
 
     socket.on('order:ready', (data) => {
       setReadyOrders(prev => {

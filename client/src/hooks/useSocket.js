@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { useAuthStore, useOrderStore } from '../store';
 
-const SOCKET_URL = 'http://localhost:3000';
+const SOCKET_URL = '';
 
 export const useKOTSocket = (onNewKOT, onStatusUpdate) => {
   const socketRef = useRef(null);
