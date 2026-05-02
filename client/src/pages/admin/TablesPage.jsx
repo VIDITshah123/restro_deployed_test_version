@@ -32,40 +32,45 @@ const TablesPage = () => {
 
   const downloadQR = async (table) => {
     try {
+      if (!table.qr_code_url) {
+        alert('QR Code not generated for this table yet.');
+        return;
+      }
+
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = 300;
       canvas.height = 350;
       
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const img = new Image();
+      img.crossOrigin = "Anonymous"; // Prevent CORS issues if any
+      img.onload = () => {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#000000';
+        ctx.font = 'bold 24px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(table.table_number, canvas.width / 2, 40);
+        
+        ctx.font = '14px Inter, sans-serif';
+        ctx.fillStyle = '#666666';
+        ctx.fillText('Scan QR to view menu', canvas.width / 2, 70);
+        
+        // Draw the QR code image (center it)
+        ctx.drawImage(img, (canvas.width - 200) / 2, 90, 200, 200);
+        
+        ctx.font = 'bold 16px Inter, sans-serif';
+        ctx.fillStyle = '#F97316';
+        ctx.fillText('Restaurant Management System', canvas.width / 2, 320);
+        
+        const link = document.createElement('a');
+        link.download = `${table.table_number.replace(/\s+/g, '-').toLowerCase()}-qr.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
       
-      ctx.fillStyle = '#000000';
-      ctx.font = 'bold 24px Inter, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(table.table_number, canvas.width / 2, 40);
-      
-      const menuUrl = `${window.location.origin}/menu/${table.id}`;
-      ctx.font = '14px Inter, sans-serif';
-      ctx.fillStyle = '#666666';
-      ctx.fillText('Scan QR to view menu', canvas.width / 2, 70);
-      
-      const qrPlaceholder = `QR Code for:\n${menuUrl}`;
-      ctx.font = '12px monospace';
-      ctx.fillStyle = '#333333';
-      const lines = qrPlaceholder.split('\n');
-      lines.forEach((line, i) => {
-        ctx.fillText(line, canvas.width / 2, 120 + i * 20);
-      });
-      
-      ctx.font = 'bold 16px Inter, sans-serif';
-      ctx.fillStyle = '#F97316';
-      ctx.fillText('Restaurant Management System', canvas.width / 2, 320);
-      
-      const link = document.createElement('a');
-      link.download = `${table.table_number.replace(/\s+/g, '-').toLowerCase()}-qr.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+      img.src = table.qr_code_url;
     } catch (err) {
       console.error('Error downloading QR:', err);
       alert('Failed to download QR code');
